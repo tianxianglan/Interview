@@ -21,16 +21,19 @@ public class RankByAsciiOfHW {
             }
         }
         num--;
-
         //采用冒泡排序对字母进行升序排序
         for (int j = 0; j< num; j++){
             for (int k = 0; k< num- j; k++){
+                int swap = 0;
                 int kIndex = indexOfChar[k];
                 if (chars[kIndex] > chars[indexOfChar[k+ 1]]){
                     char ch = chars[indexOfChar[k+ 1]];
                     chars[indexOfChar[k+ 1]] = chars[kIndex];
                     chars[kIndex] = ch;
+
+                    swap = 1;
                 }
+                if (swap == 1) break;
             }
         }
 
