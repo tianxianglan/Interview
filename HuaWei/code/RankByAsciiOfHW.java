@@ -3,6 +3,8 @@ package interview;
 import java.util.Scanner;
 
 /**
+*¸ø³öÒ»¸ö×Ö·û´®£¬½«×Ö·û´®µÄ×ÖÄ¸°´ASCIIÂëË³ĞòÅÅĞò£¬ÆäÓàµÄ·Ç×ÖÄ¸µÄ×Ö·ûÎ»ÖÃ²»±ä
+*
  * Created by tianxianglan on 2017/1/6.
  */
 public class RankByAsciiOfHW {
@@ -21,7 +23,7 @@ public class RankByAsciiOfHW {
             }
         }
         num--;
-        //é‡‡ç”¨å†’æ³¡æ’åºå¯¹å­—æ¯è¿›è¡Œå‡åºæ’åº
+        //é‡‡ç”¨å†’æ³¡æ’åºå¯¹å­—æ¯è¿›è¡Œå‡åºæ’åº?
         for (int j = 0; j< num; j++){
             for (int k = 0; k< num- j; k++){
                 int swap = 0;

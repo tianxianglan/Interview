@@ -3,6 +3,9 @@ package interview;
 import java.util.Scanner;
 
 /**
+*给出五门课程的成绩，求平均值。如果输入的成绩不足五个则按五个计算。如果输入的多余五个
+* 则取前五个成绩
+*
  * Created by tianxianglan on 2017/1/5.
  */
 public class averOfHW {
