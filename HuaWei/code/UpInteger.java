@@ -13,29 +13,40 @@ public class UpInteger {
         Scanner scanner = new Scanner(System.in);
         String number = scanner.nextLine();
         int point = number.indexOf('.');
-        String intPart = number.substring(0,point);
-        String floatPart = number.substring(point+ 1);
+        if (point == -1){
+            StringBuffer result = new StringBuffer();
+            result.append(toUpOfInt(number));
+            System.out.println(result);
+        }else {
+            String intPart = number.substring(0,point);
+            String floatPart = number.substring(point+ 1);
 
-        StringBuffer result = new StringBuffer();
-        result.append(toUpOfInt(intPart));
-        result.append("点");
-        result.append(toUpOfFloat(floatPart));
-        System.out.println(result);
+            StringBuffer result = new StringBuffer();
+            result.append(toUpOfInt(intPart));
+            result.append("点");
+            result.append(toUpOfFloat(floatPart));
+            System.out.println(result);
+        }
     }
 
     public static StringBuffer toUpOfInt(String str){
         StringBuffer stringBuffer = new StringBuffer();
-        for (int i = 0; i< str.length(); i++){
-            int num = str.charAt(i)- '0';
-            if (num == 0 && stringBuffer.charAt(stringBuffer.length()- 1) == '零')
-                continue;
-            else {
+        boolean flag = true;
+        for (int i = 0; i< str.length(); i++) {
+            int num = str.charAt(i) - '0';
+            if (num == 0 && stringBuffer.charAt(stringBuffer.length() - 1) == '零')
+                flag = false;
+            if (flag) {
                 if (num != 0){
                     stringBuffer.append(NUMBER[num]);
                     stringBuffer.append(PLUS[str.length()- i- 1]);
                 }else
                     stringBuffer.append(NUMBER[num]);
             }
+            flag = true;
+        }
+        if (stringBuffer.charAt(stringBuffer.length()- 1) == '零'){
+            stringBuffer.deleteCharAt(stringBuffer.length()- 1);
         }
         return stringBuffer;
     }
