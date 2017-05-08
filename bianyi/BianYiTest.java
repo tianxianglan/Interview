@@ -11,20 +11,22 @@ public class BianYiTest {
     public static void main(String[] args) {
         try {
             BufferedReader bufferedReader  = new BufferedReader(new InputStreamReader(new FileInputStream(new File("C:\\Users\\tianxianglan\\Desktop\\test.txt")), "UTF-8"));
-            FileOutputStream fileOutputStream = new FileOutputStream(new File("C:\\Users\\tianxianglan\\Desktop\\write.txt"));
+            FileOutputStream fileOutputStream = new FileOutputStream(new File("C:\\*.dys"));
+            FileOutputStream errOutput = new FileOutputStream(new File("C:\\*.err"));
 
             String lineText = null;
+            int lineNum = 1;
             while ((lineText = bufferedReader.readLine()) != null){
                 lineText = lineText.trim();
                 String[] part = lineText.split(" ");
                 for (String str : part){
                     if (checkWords(str))
-                        writeFile(str, fileOutputStream);
+                        writeFile(str, fileOutputStream, lineNum);
                     else {
-                        String[] strArray = doIllegal(str);
+                        String[] strArray = doIllegal(str, errOutput, lineNum);
                         for (String strIllegal : strArray){
                             if (strIllegal != null)
-                                writeFile(strIllegal, fileOutputStream);
+                                writeFile(strIllegal, fileOutputStream, lineNum);
                             else
                                 break;
                         }
@@ -33,6 +35,7 @@ public class BianYiTest {
                 byte[] bytesOfEndLine = "             EOLN 24".getBytes();
                 fileOutputStream.write(bytesOfEndLine);
                 fileOutputStream.write("\r\n".getBytes());
+                lineNum ++;
             }
             byte[] bytesOfEndFile = "             EOF 25".getBytes();
             fileOutputStream.write(bytesOfEndFile);
@@ -59,9 +62,9 @@ public class BianYiTest {
     }
 
     //将处理后的字符串写入文件中
-    public static void writeFile(String str, FileOutputStream fileOutputStream){
+    public static void writeFile(String str, FileOutputStream fileOutputStream, int lineNum){
         try {
-            str = transfer(str);
+            str = transfer(str, fileOutputStream, lineNum);
             byte[] bytes = str.getBytes();
             fileOutputStream.write(bytes);
             fileOutputStream.write("\r\n".getBytes());
@@ -73,7 +76,7 @@ public class BianYiTest {
     }
 
     //对不合规的字符串进行分开处理
-    public static String[] doIllegal(String str){
+    public static String[] doIllegal(String str, FileOutputStream fileOutputStream, int lineNum) throws IOException {
         Queue<String> queue = new LinkedList<>();
         String[] strArray = new String[10];
         HashMap hashMap = getHashMap();
@@ -89,9 +92,15 @@ public class BianYiTest {
                 if (!sb.toString().equals(""))
                     strArray[index] = sb.toString();
                 if (singleWord.equals(":") || singleWord.equals(">") || singleWord.equals("<")){
-                    if (i != (str.length()- 1) && hashMap.containsKey(String.valueOf(str.charAt(i+ 1)))){
+                    String nextStr = String.valueOf(str.charAt(i+ 1));
+                    if (i != (str.length()- 1) && hashMap.containsKey(nextStr)){
                         singleWord += String.valueOf(str.charAt(i+ 1));
                         i++;
+                    }
+                    if (singleWord.equals(":") && !nextStr.equals("=")){
+                        String errmsg = "***LINE:"+ lineNum+ "  ':'后需接'='";
+                        fileOutputStream.write(errmsg.getBytes());
+                        fileOutputStream.write("\r\n".getBytes());
                     }
                 }
                 strArray[++index] = singleWord;
@@ -104,7 +113,7 @@ public class BianYiTest {
     }
 
     //将字符串处理成正确的格式
-    public static String transfer(String str){
+    public static String transfer(String str, FileOutputStream fileOutputStream, int lineNum) throws IOException {
         HashMap<String, Integer> hashMap = getHashMap();
         StringBuffer sb = new StringBuffer();
         int index;
@@ -120,8 +129,17 @@ public class BianYiTest {
         if (hashMap.containsKey(str))
             index = hashMap.get(str);
         else {
-            if (Character.isDigit(str.charAt(0)))
+            if (Character.isDigit(str.charAt(0))){
                 index = 11;
+                for (int i = 0; i< str.length(); i++){
+                    if (!Character.isDigit(str.charAt(i))){
+                        String errmsg = "***LINE:"+ lineNum+ "  变量名命名错误";
+                        fileOutputStream.write(errmsg.getBytes());
+                        fileOutputStream.write("\r\n".getBytes());
+                        break;
+                    }
+                }
+            }
             else
                 index = 10;
         }
