@@ -1,1 +1,5 @@
 - This is some linux order that i had meeted
+  - sudo apt-get install
+  - sudo dpkg -i 
+  - sudo apt-get install -f
+    - 安装一些软件时出现的依赖出错情况，install表示用于安装。-f为-fix-broken的简写，主要用于修复依赖关系
