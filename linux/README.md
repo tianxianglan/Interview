@@ -1,10 +1,4 @@
-- This is some linux order that i had meeted
-  - sudo apt-get install
-  - sudo dpkg -i 
-  - sudo apt-get install -f
-    - 安装一些软件时出现的依赖出错情况，install表示用于安装。-f为-fix-broken的简写，主要用于修复依赖关系
-    
-###1、安装软件：  
+### 1、安装软件：  
   - 在线安装：
     - 可以使用sudo apt-get install softWareName，该指令会解决软件的依赖问题，apt是建立在dpkg之上的软件管理工具
   - deb包：
