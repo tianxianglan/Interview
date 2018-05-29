@@ -1,0 +1,9 @@
+### 问题描述：多线程情况下按一定的顺序重复输出
+#### 如线程A输出A，线程B输出B，线程C输出C。则要求重复输出`ABCABCABC`
+* 方法一：Thread.join()  
+  * join()方法保证了只有在执行完调用该方法线程的run（）执行完后，程序才会继续向下执行
+  * 代码中ThreadB线程的run（）中执行了ThreadA.join()，则程序会将线程的执行权交给ThreadA，只有在ThreadA执行完后ThreadB才得以继续执行。
+* 方法二：synchronized
+  * 通过设置同步代码块的形式控制线程的输出。`注意线程中执行的run（）中，只有在执行了run方法后i才会进行累加的操作`，这也是能使得重复输出的关键
+* 方法三：ReentranLock
+  * ReentranLock与synchronized类似，都是利用了线程的互斥性
