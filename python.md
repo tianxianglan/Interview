@@ -5,7 +5,6 @@ print L[0:10]//输出下标0~9的数
 print L[2::3]//从第二个开始
 print L[4:50:5]//不大于50的5的倍数
 ```
-
 ```
 L = ['Adam', 'Lisa', 'Bart', 'Paul']
 for index, name in zip(range(1,5),L):
