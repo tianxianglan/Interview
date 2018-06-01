@@ -7,6 +7,24 @@ insert{index,val}:在指定index下标出添加val元素
 pop(index)：删除指定下标index的元素，如index未指定，则默认删除最末尾元素
 ```
 ```
+tuple: Python中另外一种有序的列表，与list非常相似，但tuple一旦创建完毕就不能修改
+t = ('Adam', 'Lisa', 'Bart')
+```
+```
+dict：key-value结构。在一个dict中，key不允许重复，且值不可变
+d = {
+    'Adam': 95,
+    'Lisa': 85,
+    'Bart': 59
+}
+len()：表示dict中key-value个数
+```
+```
+set：set持有一系列元素，这一点和list很像，但set的元素没有重复的，且无序
+s = set(['A', 'B', 'C'])
+
+```
+```
 L = range(1, 101)//1~100的数组
 
 print L[0:10]//输出下标0~9的数
