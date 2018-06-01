@@ -1,4 +1,12 @@
 ```
+list: Python内置的一种数据类型，是一种有序集合
+L = ['Adam', 'Lisa', 'Bart']
+L[-1]：表示倒数第一个
+append()：在列表`末尾`添加新的元素
+insert{index,val}:在指定index下标出添加val元素
+pop(index)：删除指定下标index的元素，如index未指定，则默认删除最末尾元素
+```
+```
 L = range(1, 101)//1~100的数组
 
 print L[0:10]//输出下标0~9的数
