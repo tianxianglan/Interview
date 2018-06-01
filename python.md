@@ -78,3 +78,12 @@ sorted(list, f):
                     return 1
                   return 0
 ```
+-  匿名函数：
+            map(lambda x: x* x, [1,2,3]) = [1, 4, 9].关键字表示匿名函数，冒号前面的x表示函数参数
+            
+-  Decorator（装饰器）：
+            @new_fn                         def f1(x):
+            def f1(x):                           return x* 2
+                 return x* 2                 f1 = new_fn(f1)
+            
+               
