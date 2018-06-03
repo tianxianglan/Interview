@@ -61,22 +61,24 @@ map（f,list）：
             接收一个函数 f 和一个 list，并通过把函数 f 依次作用在 list 的每个元素上，得到一个新的 list 并返回。
             
 reduce(f,list):
-            reduce()函数接收的参数和 map()类似，一个函数 f，一个list，但行为和 map()不同，reduce()传入的函数 f 必须接收两个参数， 
-            reduce()对list的每个元素反复调用函数f，并返回最终结果值.   
+            reduce()函数接收的参数和 map()类似，一个函数 f，一个list，但行为和 map()不同，reduce()传入的函数 f 必须  
+            接收两个参数，reduce()对list的每个元素反复调用函数f，并返回最终结果值.   
             同时reduce函数也可以接受第三个值作为计算的初始值。如reduce(f, [1, 3, 5, 7, 9], 100) = 125
            
 filtert(f, list):
-            filter()函数接收一个函数 f 和一个list，这个函数 f 的作用是对每个元素进行判断，返回 True或 False，filter()根据判断结   
-            果自动过滤掉不符合条件的元素，返回由符合条件元素组成的新list\
+            filter()函数接收一个函数 f 和一个list，这个函数 f 的作用是对每个元素进行判断，返回 True或 False，  
+            filter()根据判断结果自动过滤掉不符合条件的元素，返回由符合条件元素组成的新list
             
 sorted(list, f):
-            它可以接收一个比较函数来实现自定义排序，比较函数的定义是，传入两个待比较的元素 x, y，如果 x 应该排在 y 的前面，返回 -1，如果 x 应该排在 y 的后面，返回 1。如果 x 和 y 相等，返回 0。函数f可以定义为：
+            它可以接收一个比较函数来实现自定义排序，比较函数的定义是，传入两个待比较的元素 x, y，如果 x 应该排在 y 的前面，  
+            返回 -1，如果 x 应该排在 y 的后面，返回 1。如果 x 和 y 相等，返回 0。函数f可以定义为：
             def reversed_cmp(x, y):
                  if x > y:
                     return -1
                   if x < y:
                     return 1
                   return 0
+```
 ```
 -  匿名函数：
             map(lambda x: x* x, [1,2,3]) = [1, 4, 9].关键字表示匿名函数，冒号前面的x表示函数参数
@@ -86,4 +88,4 @@ sorted(list, f):
             def f1(x):                           return x* 2  
                 return x* 2                 f1 = new_fn(f1)  
             
-               
+```           
