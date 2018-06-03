@@ -86,6 +86,6 @@ sorted(list, f):
 -  Decorator（装饰器）：  
             @new_fn                          def f1(x):  
             def f1(x):                           return x* 2  
-                return x* 2                 f1 = new_fn(f1)  
+                return x* 2                  f1 = new_fn(f1)  
             
 ```           
