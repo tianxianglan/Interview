@@ -82,10 +82,43 @@ sorted(list, f):
 ```
 -  匿名函数：
             map(lambda x: x* x, [1,2,3]) = [1, 4, 9].关键字表示匿名函数，冒号前面的x表示函数参数
-            
+```
+-  高阶函数：
+```
 -  Decorator（装饰器）：  
-            @new_fn                          def f1(x):  
-            def f1(x):                           return x* 2  
-                return x* 2                  f1 = new_fn(f1)  
-            
+            @log                          def log(f):  
+            def f1(x):                          def fn(x) 
+                return x* 2                          print "log detail" 
+             print x                                 return f(x)
+                                                return fn
 ```           
+-  偏函数
+```
+    functools.partial可以帮助创建一个偏函数。可以实现把一个参数多的函数变成一个参数较少的函数，减少的参数需要在创建时  
+    指定默认值，这样，新函数调用的难度就降低了。  
+    import functools
+    int2 = functools.partial(int, base = 2)
+    int2('101') = 5
+```
+python每一个包中都必须有一个__init__.py文件
+
+-  面向对象编程：  
+```
+class Person(object):
+    psss
+    
+按照Python编程习惯，类名与大写字母开头，进接着是object，表示该类是从哪个类继承下来的
+```
+```
+实际应用中，我们需要自由的给一个实例绑定的各种属性。但现实社会中，一个类型的实例应该拥有相同的相同的名字的属性。  
+在定义Person类时，可以为Person类添加一个特殊的__init__()方法，当创建实例时，__init__()方法被自动调用，我们  
+就能在此为每个实例都统一加上以下属性：
+class Person(object):
+    def __init__(self, name, gender, birth):
+        self.name = name
+        self.gender = gender
+        self.birth = birth
+```
+
+
+
