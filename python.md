@@ -119,6 +119,65 @@ class Person(object):
         self.gender = gender
         self.birth = birth
 ```
+-  类继承
+```
+class Person(object):
+    def __init__(self, name, gender):
+        self.name = name
+        self.gender = gender
 
+class Teacher(Person):
 
+    def __init__(self, name, gender, course):
+        //函数super(Teacher, self)将返回当前类继承的父类
+        super(Teacher, self).__init__(name, gender)
+        self.course = course
+
+t = Teacher('Alice', 'Female', 'English')
+print t.name
+print t.course
+```
+```
+class Person(object):
+
+    def __init__(self, name, gender, **kw):
+        self.name = name
+        self.gender = gender
+        for k, v in kw.iteritems():
+            setattr(self, k, v)//设置对象属性
+
+p = Person('Bob', 'Male', age=18, course='Python')
+print p.age
+print p.course
+```
+-- 特殊方法：
+    类似于Java中的toString（）方法，可以进行重写。在Python中，这类方法包括：__str__()、__repr__()、__cmp__()
+    
+__slots__  是指一个类允许的属性列表：
+```
+class Student(object):
+    __slots__ = ('name', 'gender', 'score')
+    def __init__(self, name, gender, score):
+        self.name = name
+        self.gender = gender
+        self.score = score
+```
+   
+一个类实例可以变成一个可调用对象，只需要实现一个特殊方法__call__()
+```
+将Person类变成一个可调用对象：
+class Person(object):
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        
+    def __call__(self, friend):
+        print 'my name is %s' % self.name
+        pritn 'my friend is %s' % friend
+        
+>>>p = Person('bob', 23)
+>>>p('Tim')
+my name is bob
+my friend is Tim
+```
 
