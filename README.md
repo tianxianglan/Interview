@@ -48,5 +48,5 @@
                 now = System.currentTimeMillis() - base;
             }
         }
-    }
-    ``
+
+    ```
