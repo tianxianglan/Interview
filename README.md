@@ -50,3 +50,5 @@
         }
 
     ```
+- Spring-boot mybatis将sql信息打印控制台  
+   - 将`mybatis.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl`添加到`application.properties`
