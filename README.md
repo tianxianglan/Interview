@@ -52,3 +52,6 @@
     ```
 - Spring-boot mybatis将sql信息打印控制台  
    - 将`mybatis.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl`添加到`application.properties`
+   
+ - WeakReference（弱引用）：
+   -  考虑下面一种情况：现在有一个Product类代表一种产品，这个类被设计成了不可拓展的，现在我们想给每个Product添加一个编号id，一种解决方式就是使用HashMap<Product, Integer>。于是问题来了，如果此时我们已经不需要一个Product对象存在于内存中了（比如已经卖出），假设指向它的引用为productA，这时我们可能会将productA置为null，然而这是productA指向的Product对象并不会被回收，因为他显然还被HashMap引用着。所以在这种情况下，我们i想要真正回收一个Product对象，仅仅把他的强引用置为null是不够的，还要把相应的条目从HashMap中删除，但从HashMap中删除这个工作显示不是我们想自己完成的，我们希望告诉垃圾收集器：在只有HashMap中的key在引用着Product对象的情况下，就可以回收相应的Product对象了。这个时候我们使用弱引用就能达到这个目的，我们只需要用一个指向Product对象的弱引用来作为HashMap的key就可以了
