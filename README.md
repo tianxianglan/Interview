@@ -55,3 +55,39 @@
    
  - WeakReference（弱引用）：
    -  考虑下面一种情况：现在有一个Product类代表一种产品，这个类被设计成了不可拓展的，现在我们想给每个Product添加一个编号id，一种解决方式就是使用HashMap<Product, Integer>。于是问题来了，如果此时我们已经不需要一个Product对象存在于内存中了（比如已经卖出），假设指向它的引用为productA，这时我们可能会将productA置为null，然而这是productA指向的Product对象并不会被回收，因为他显然还被HashMap引用着。所以在这种情况下，我们i想要真正回收一个Product对象，仅仅把他的强引用置为null是不够的，还要把相应的条目从HashMap中删除，但从HashMap中删除这个工作显示不是我们想自己完成的，我们希望告诉垃圾收集器：在只有HashMap中的key在引用着Product对象的情况下，就可以回收相应的Product对象了。这个时候我们使用弱引用就能达到这个目的，我们只需要用一个指向Product对象的弱引用来作为HashMap的key就可以了
+- 链接下载的问题
+   - 问题描述：在文件上传jss后，会返回一个url供用户点击下载，但在实际情况中，在将url放入`<a href = 'url'>`点击后，有的url是下载，有的确实预览
+   - 原因：浏览器原因，对于浏览器能够识别的文件，将预览，对于无法识别的，则出现下载框
+   - 解决办法： 为了能够实现全部的url都为下载，采用的方案为后端经服务器处理，具体方法为：
+      - 点击下载标签后，将请求传往后端，后端在拿到url后，通过`URL`类，设置header头后发起url请求，获取到输入流`InputStream`
+      - 将`HttpServletResponse`设置header头后将输入流信息写入到`HttpServletResponse`中
+      - 具体代码：
+      ```
+      InputStream input = null;
+        try{
+                //文件url
+                String filePath;
+                String fileName = findFile.getFileName();
+                URL obj = new URL(filePath);
+                HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+                con.setRequestMethod("GET");
+                con.setInstanceFollowRedirects(true);
+                input = con.getInputStream();
+                String disposition = new StringBuilder("attachment;filename=").append(URLEncoder.encode(fileName,"UTF-8")).append(".pdf").toString();
+
+
+                response.reset();
+                //设置文件头，关键所在
+                response.addHeader("Content-Disposition", disposition);
+                ServletOutputStream out = response.getOutputStream();
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length=input.read(buffer))> 0){
+                    out.write(buffer, 0, length);
+                }
+                out.close();
+            }
+        } catch (Exception e) {
+            logger.error("转换下载文件: exception = {}", e);
+        }
+      ```
