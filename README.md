@@ -102,3 +102,18 @@
    - 持久性：事务完成之后，对数据的修改都将持久化到磁盘中，并不会被回滚
 - mybatis的mapper文件问题
    - 一般情况下，mapper文件对值的set有`#`和`$`两种，`#`将传入的数据都当成一个字符串，会对数据自动加入双引号，如`order by #{orderClause}`，如果传入的值是`created`，则会变成`order by "created"`，出现数据库异常，所以在mapper文件中出现`order by`等时应使用$
+   - mapper文件:
+   ```
+      <resultMap id='JoinMap' type="com.jd.yao.*.*.*.ActApplyNum">
+         <result column="id" property="id"/>
+         <result column="num" property="num"/>
+      </resultMap>
+      <select id="queryNum" parameterType="java.util.List" resultMap="JoinMap">
+         select count(pin) as num, act_id as is from test_acr where yn=1
+         and act_id in
+         <foreach collection="list" iten="id" open="(" close=")" separator=",">
+            #{id}
+         </foreach>
+         group by act_id
+       </select>
+   ```
