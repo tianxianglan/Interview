@@ -117,3 +117,4 @@
          group by act_id
        </select>
    ```
+   - 返回结果类型有`resultMap`、`resultType`两张，resultType更偏向于一个具体的返回类型，如java.lang.Integer、Map等。而resultMap偏向于结果集的映射，在需要返回一个实体对象时应使用resultMap
