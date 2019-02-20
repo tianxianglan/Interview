@@ -124,3 +124,9 @@
        </select>
    ```
    - 返回结果类型有`resultMap`、`resultType`两张，resultType更偏向于一个具体的返回类型，如java.lang.Integer、Map等。而resultMap偏向于结果集的映射，在需要返回一个实体对象时应使用resultMap
+   
+   - 接口设置为post请求方式，参数为一个Integer类型参数，前无任何注解。。。但适用postman进行接口测试时，content-Type设置为application/json，后端无法获取到参数值
+      - @RequestParam
+         用来处理Content-Type为application/x-www-form-urlencode编码的内容
+      - @RequertBody
+         用来处理Content-Type不是application/x-www-form-urlencode编码的内容，例如application/json、application/xml等。他是通过使用HandlerAdapter配置的HttpMessageConverts来解析post data body，之后绑定到相应的bean上
