@@ -130,3 +130,16 @@
          用来处理Content-Type为application/x-www-form-urlencode编码的内容
       - @RequertBody
          用来处理Content-Type不是application/x-www-form-urlencode编码的内容，例如application/json、application/xml等。他是通过使用HandlerAdapter配置的HttpMessageConverts来解析post data body，之后绑定到相应的bean上
+         
+- ```
+   List<Person> list;
+   List<Object> new;
+   list.stream().foreach(o -> {
+      new.add(funcA(o));
+      new.add(funB(o));
+   });
+   new = list.parallelStream.flatMap(o -> Stream.of(funcA(o), funcB(o))).collect(Collectors.toList())
+  ```
+         
+         
+         
