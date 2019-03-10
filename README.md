@@ -140,6 +140,22 @@
    });
    new = list.parallelStream.flatMap(o -> Stream.of(funcA(o), funcB(o))).collect(Collectors.toList())
   ```
-         
+- 弱引用（WeakReference）:
+   ```
+   1、Person person = new Person(11);
+   2、WeakReference weak = new WeakReference(person);
+   3、person = null;
+   4、System.out.println(Json.parse(weak.get()));
+   5、System.gc();
+   6、System.out.println(Json.parse(weak.get()));
+   
+   output:{"age":11}、null
+   如果注释掉第3行，则两个输出返回的都是{"age":11}
+   ```
+   解释：1、声明一个强引用person，此时heap中将分配一块内存区域给Person对象，stack中也讲会有一个强引用person指向这块内存区域
+        2、声明一个弱引用对象weak，此弱引用对象指向的也是person所指向的内存区域（weak与person指向的是堆中的同一块区域）
+        3、强引用person被置为null，只是就只有弱引用waek还指向着堆内存，所以第4行的输出会是Person对象
+        5、显式的进行一次gc操作，此时，堆内存Person区域只有一个弱引用weak引用着，根据弱引用的特性，该块内存区域将会被jvm回收，所以在第六行输出堆内存数据时返回的结果将为空
+   
          
          
