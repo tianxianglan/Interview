@@ -157,5 +157,6 @@
         3、强引用person被置为null，只是就只有弱引用waek还指向着堆内存，所以第4行的输出会是Person对象  
         5、显式的进行一次gc操作，此时，堆内存Person区域只有一个弱引用weak引用着，根据弱引用的特性，该块内存区域将会被jvm回收，所以在第六行输出堆内存数据时返回的结果将为空
    - 延申：对于强引用，可以去看ArrayList类源码中的remove（）方法，他对元素删除的操作基于将对对像的引用置为null，等下一次GC操作的时候就会将内存进行回收。`elementData[--size] = null; // clear to let GC do its work`
-- 主站登陆后会往浏览器中写cookie，因为cookie一旦创建无法修改，修改在退出登陆时需要获取到原有cookie的name属性，新建该name的cookie，写入浏览器中覆盖原有cookie         
+- 主站登陆后会往浏览器中写cookie，因为cookie一旦创建无法修改，修改在退出登陆时需要获取到原有cookie的name属性，新建该name的cookie，写入浏览器中覆盖原有cookie    
+   - cookie过期时间设置为正数x时，cookie将在x秒后过期。如果设置为0，则并不会往浏览器中写cookie，去获取的话也无法获取到。  设置成负数时，cookie将在关闭浏览器后过期
          
