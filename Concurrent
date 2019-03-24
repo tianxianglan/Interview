@@ -60,3 +60,4 @@
         之后主线程在执行到t1.wait（）时将释放掉t1的对象锁资源进入阻塞状态。但是线程t1在获取到对象锁资源之后开始进入运行状态，进入run（）方法的同步  
         代码块中，执行notify()，将主线程进行唤醒操作，主线程得以继续执行。
         ![运行时序图](https://images0.cnblogs.com/blog/497634/201312/18183712-f04899f92aaa43b6a33a85fecfa60a9d.png)
+        from https://www.cnblogs.com/skywang12345/p/3479224.html 注意看评论
