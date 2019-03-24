@@ -34,9 +34,13 @@
         if (millis == 0) {
             while (isAlive()) {//判断threadA线程是否存活
                /**
+               *非静态同步方法，锁住的是当前对象实例
                *main线程执行到wait（）方法时，将释放发到threadA的锁，并使main线程进入到等待序列中
                */
                 wait(0);
+                /**
+                *有个问题，线程的notify（）操作在哪里执行？
+                **/
             }
         } else {
             while (isAlive()) {
@@ -159,6 +163,7 @@
    - 延申：对于强引用，可以去看ArrayList类源码中的remove（）方法，他对元素删除的操作基于将对对像的引用置为null，等下一次GC操作的时候就会将内存进行回收。`elementData[--size] = null; // clear to let GC do its work`
 - 主站登陆后会往浏览器中写cookie，因为cookie一旦创建无法修改，修改在退出登陆时需要获取到原有cookie的name属性，新建该name的cookie，写入浏览器中覆盖原有cookie    
    - cookie过期时间设置为正数x时，cookie将在x秒后过期。如果设置为0，则并不会往浏览器中写cookie，去获取的话也无法获取到。  设置成负数时，cookie将在关闭浏览器后过期
+   - maxAge默认是关闭浏览器清楚cookie
 - 枚举match
    ```
    public enum HttpMethod {
