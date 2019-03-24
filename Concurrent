@@ -10,3 +10,51 @@
     这段代码中虚拟机是否会对1跟2段代码进行重排序呢？如果2先于1执行，2抛出异常，代码将不会执行对`赋值`的操作。答案是肯定的，即便存在之前所说风险，但  
     虚拟  机仍会对这两行代码进行重排序。但重排序的结果不会受到异常的影响，`这是因为JIT在重排序时会在catch语句中插入相应的补偿代码（a = 1），这样做  
     的代价是会使的  catch里面的逻辑变得复杂，但是JIT优化原则是：尽可能地优化程序正常运行下的逻辑，哪怕以catch块逻辑变得复杂为代价。`
+- 代码：
+    ```
+    class ThreadA extends Thread{
+
+        public ThreadA(String name) {
+            super(name);
+        }
+
+        public void run() {
+            synchronized (this) {
+                System.out.println(Thread.currentThread().getName()+" call notify()");
+                // 唤醒当前的wait线程
+                notify();
+            }
+        }
+    }
+
+    public class TestJoin {
+
+        public static void main(String[] args) {
+
+            ThreadA t1 = new ThreadA("t1");
+
+            synchronized(t1) {
+                try {
+                    // 启动“线程t1”
+                    System.out.println(Thread.currentThread().getName()+" start t1");
+                    t1.start();
+
+                    // 主线程等待t1通过notify()唤醒。
+                    System.out.println(Thread.currentThread().getName()+" wait()");
+                    //执行线程（主线程）释放锁资源（t1）
+                    t1.wait();
+
+                    System.out.println(Thread.currentThread().getName()+" continue");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    ```
+    - 代码解析：
+        首先，主线程获取到了对象t1的对象锁并启动线程t1，但是线程t1进入同步代码块试图获取对象t1的锁资源，此时t1的锁资源被主线程占有，因此线程t1并未  
+        进入运行状态，而是在等待对象t1的锁资源。
+        之后主线程在执行到t1.wait（）时将释放掉t1的对象锁资源进入阻塞状态。但是线程t1在获取到对象锁资源之后开始进入运行状态，进入run（）方法的同步  
+        代码块中，执行notify()，将主线程进行唤醒操作，主线程得以继续执行。
+        ![运行时序图](https://images0.cnblogs.com/blog/497634/201312/18183712-f04899f92aaa43b6a33a85fecfa60a9d.png)
