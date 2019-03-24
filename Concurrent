@@ -22,6 +22,8 @@
             synchronized (this) {
                 System.out.println(Thread.currentThread().getName()+" call notify()");
                 // 唤醒当前的wait线程
+                //但其实在这段代码中，有没有notify（）影响不大，因为只有两个线程（main、t1），t1在获取锁执行完这段代码后自然会释放掉锁资源，而处于  
+                //等待队列的主线程也就会被唤醒得以继续执行
                 notify();
             }
         }
