@@ -40,7 +40,7 @@
                 wait(0);
                 /**
                 *有个问题，线程的notify（）操作在哪里执行？
-                *answer:  线程在执行完成后会执行exit()方法，该方法中有个group.threadTerminated()方法，进去后里面有对线程进行notifyAll()的操作
+                *answer(待验证):  线程在执行完成后会执行exit()方法，该方法中有个group.threadTerminated()方法，进去后里面有对线程进行  notifyAll()的操作
                 **/
             }
         } else {
