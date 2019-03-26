@@ -61,3 +61,56 @@
         代码块中，执行notify()，将主线程进行唤醒操作，主线程得以继续执行。
         ![运行时序图](https://images0.cnblogs.com/blog/497634/201312/18183712-f04899f92aaa43b6a33a85fecfa60a9d.png)
         from https://www.cnblogs.com/skywang12345/p/3479224.html 注意看评论
+
+- 代码：
+    ```
+        public void testSeq() {
+        Object obj = new Object();
+        Thread t1 = new Thread(() -> {
+            synchronized (obj){
+                System.out.println("t1 possess the monitor");
+                try {
+                    obj.notifyAll();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        Thread t2 = new Thread(() -> {
+            synchronized (obj){
+                System.out.println("t2 possess the monitor");
+                try {
+                    Thread.sleep(3000);
+                    obj.notifyAll();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        Thread t3 = new Thread(() -> {
+            synchronized (obj){
+                System.out.println("t3 possess the monitor");
+                try {
+                    obj.notifyAll();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        synchronized (obj){
+            try{
+                t1.start();
+                t2.start();
+                t3.start();
+                System.out.println("main");
+                obj.wait();
+                System.out.println("end");
+            }catch (Throwable e){
+                e.printStackTrace();
+            }
+        }
+    }
+    ```
+    - 解释：
+        上述代码运行中，main线程先获取到obj对象的锁资源，但随后执行wait（）操作将锁资源释放掉，但当其他线程将锁资源释放时，main线程也不能马上  
+        执行，仍要先获取到obj对象的锁资源才得以继续执行
