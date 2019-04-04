@@ -202,3 +202,20 @@
     }
 }
    ```
+- 跨域
+   a.jd.com跨域访问b.jd.com，为了b能够获取到a的cookie数据，需要额外配置属性
+   ```
+   $.ajax({
+            // url:'http://yaogy.jd.com/activity/show/noCors',
+            url: 'http://yao.jd.com/shopPage/price',
+            data:'43890183136',
+            dataType:"json",
+            type:"POST",
+            contentType: "text/plain",
+            xhrFields:{withCredentials: true},
+            success:function(data){
+                alert(data)
+                $("#sssss").html("ddddddddd");
+            }
+        })
+   ```
