@@ -220,3 +220,4 @@
             }
         })
    ```
+设置withCredentials为true即可让该跨域请求携带 Cookie。 注意携带的是目标页面所在域的 Cookie。
