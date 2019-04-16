@@ -3,7 +3,7 @@
    - 2、注解修饰的方式是否是在本类中被调用  
       -  原因：Spring之所以可以对开启@Transaction的方法进行事务管理，是因为Spring为当前类生成了一个代理类，在执行相关方法的时候会判断方法中有没有该注解，如果有的话，则会开启一个事务。但是在同一个类中调用@Transaction修饰的方法时，使用的并不是代理对象，从而导致@Transaction失效
 - join（）方法：
-   - 当前线程执行到a.join()方法时，会暂停知道a线程执行完
+   - 当前线程执行到a.join()方法时，会暂停直到a线程执行完
    - 源码解析：
      - Thread类的join构造方法有三个，当调用无参方法join（）时，默认调用join（0）.
      - 样例代码：
@@ -16,7 +16,7 @@
                System.out.println("ThreadA is running");
             }
          });
-         threadA.run();
+         threadA.join();
          System.out.println("continue");
      }
      ```
