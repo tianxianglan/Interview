@@ -220,3 +220,6 @@
         })
    ```
 设置withCredentials为true即可让该跨域请求携带 Cookie。 注意携带的是目标页面所在域的 Cookie。
+
+- sql优化：
+   - limit m,n 其实是先执行 limit m + n，然后从第 m 行取 n 行，这样当 limit 翻页越往后越大，性能越低，如`select * from table_name limit 10000, 10`建议改成 `select * from table_name where id> (select * from table_name limit 10000, 1) limit 10`
