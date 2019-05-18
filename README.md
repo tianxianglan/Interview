@@ -133,7 +133,7 @@
    - 接口设置为post请求方式，参数为一个Integer类型参数，前无任何注解。。。但适用postman进行接口测试时，content-Type设置为application/json，后端无法获取到参数值
       - @RequestParam
          用来处理Content-Type为application/x-www-form-urlencode编码的内容
-      - @RequertBody
+      - @RequestBody
          用来处理Content-Type不是application/x-www-form-urlencode编码的内容，例如application/json、application/xml等。他是通过使用HandlerAdapter配置的HttpMessageConverts来解析post data body，之后绑定到相应的bean上
          
 - ```
