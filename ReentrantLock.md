@@ -35,3 +35,6 @@
   - 注意：1、线程在执行Condition.await()、Condition.signal()时都要求线程持有相关的重入锁。
           2、线程在执行Condition.signal()后，都要求释放持有的锁资源，谦让给被唤醒的线程。这也就是为什么如果没有29行代码，虽然唤醒了线程t1，  
           但t1却仍然得不到执行的原因。
+          
+          
+- 知乎文档 [链接地址](https://zhuanlan.zhihu.com/p/66244285)
