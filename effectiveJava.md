@@ -14,3 +14,25 @@
     - 静态工厂方法与构造方法相比，它可以根据入参的不同而返回不同的对象：
 - 2、创建对象使用builder模式
   - 不可变对象一定是线程安全的
+- 3、私有构造方法或者枚举实现单例
+  - 可以通过 `AccessibleObject.setAccessible` 去修改一个类的私有属性
+  ```
+  public class A{
+    private Integer data = 0;
+  }
+  
+  public class B{
+    public static void main(String[] args){
+      A a = new A();
+      Field[] fields = a.getClass().getDeclaredFields();
+      AccessibleOgject.setAccessible(fields, true);
+      try{
+        //修改私有属性值
+        fields[0].setInt(a, 150);
+        System.out.println(fields[0].get(a));
+      }catch(Throwable e){
+        //solve exception
+      }
+    }
+  }
+  ```
