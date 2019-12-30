@@ -225,4 +225,30 @@
    - limit m,n 其实是先执行 limit m + n，然后从第 m 行取 n 行，这样当 limit 翻页越往后越大，性能越低，如`select * from table_name limit 10000, 10`建议改成 `select * from table_name where id> (select * from table_name limit 10000, 1) limit 10`
 
 - java 8 接口默认方法：
+
+```
+public class SingletonInstance {
+    private SingletonInstance(){
+    }
+
+    private enum  SingletonEnum{
+        INSTANCE;
+
+        private final SingletonInstance instance;
+
+        SingletonEnum(){
+            instance = new SingletonInstance();
+        }
+
+        private SingletonInstance getInstance(){
+            return instance;
+        }
+    }
+
+    public static SingletonInstance getInstance(){
+
+        return SingletonEnum.INSTANCE.getInstance();
+    }
+}
+```
    
